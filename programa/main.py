@@ -43,37 +43,7 @@ print(os.stat(os.getcwd()))
 quit()
 
 
-
-
-def t1():
-    teste = recursividade(os.getcwd())
-    print('caminho: ',teste)
-    print('caminhos disponiveis: ',os.listdir(teste))
-    print('quantos caminhos: ',len(os.listdir(teste)))
-
-
-def t2():
-    teste = os.getcwd()
-    print('caminho: ',teste)
-    print('caminhos disponiveis: ',os.listdir(teste))
-    print('quantos caminhos: ',len(os.listdir(teste)))   
-    print('segundo caminho: ',os.listdir(teste)[2])
-    teste2 = os.path.isdir(os.listdir(teste)[2])
-    print('é diretorio: ',teste2)
-    # executar ficheiros
-    # os.startfile(teste + '\\' + os.listdir(teste)[2])
-    
-    # verificar o nome do ficheiro
-    if  'timer' in os.listdir(teste)[2]:
-        print('ficheiro de timer')        
-    
-    
-    # entrar na pasta
-    teste3 = os.getcwd() + '\\' + os.listdir(teste)[1] #entra na pasta programa
-    print('caminho: ',teste3)
-    print('caminhos disponiveis: ',os.listdir(teste3))
-    os.startfile(teste3 + '\\' + os.listdir(teste3)[1]) #executa o google
-    
+   
 
 
 #em baixo é um pseudo do return da procura_app

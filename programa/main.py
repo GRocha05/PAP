@@ -11,7 +11,8 @@ os.system('cls')
 # para verificar algo sobre um ficheiro/diretoria tenho de adicionar o nome ao caminho atual e verificar, exemplo
 # na pasta programa tenho um ficheiro chamado google, para verificar se é um ficheiro ou app tenho de entrar no programa/google e depois verificar
 
-print('xd')
+
+
 # tenho de entender como funciona esta função e criar a minha propria função para verificar o tamanho de um ficheiro ou pasta
 def get_dir_size(path='.'):
     total = 0

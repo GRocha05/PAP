@@ -17,14 +17,29 @@ os.system('cls')
 def get_dir_size(path='.'):
     total = 0
     with os.scandir(path) as it:
-        for entry in it:
-            if entry.is_file():
-                total += entry.stat().st_size
-            elif entry.is_dir():
-                total += get_dir_size(entry.path)
+        try:
+            for entry in it:
+                if entry.is_file():
+                    total += entry.stat().st_size
+                elif entry.is_dir():
+                    total += get_dir_size(entry.path)
+        except NotADirectoryError:
+            return os.path.getsize(path)
+        except:
+            pass
     return total
 
-print(get_dir_size(os.getcwd()))
+# ---------------------------------------------------------------
+
+
+for i in range(0, len(os.listdir(recursividade(os.getcwd())))):
+    if os.path.isdir(recursividade(os.getcwd()) + '\\' + os.listdir(recursividade(os.getcwd()))[i]) == True:
+        print('pasta',os.listdir(recursividade(os.getcwd()))[i])
+        try:
+            print(get_dir_size(recursividade(os.getcwd()) + '\\' + os.listdir(recursividade(os.getcwd()))[i]))
+        except:
+            print('erro a opter o tamanho do ficheiro')
+
 
 # ---------------------------------------------------------------
 

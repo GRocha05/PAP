@@ -63,3 +63,74 @@ def abrir(item, caminhos):
 
 
 # fazer a sobrepossição no monitor
+
+# ------------------------------------------------------------------------------------------
+
+# Organização das funções
+
+
+# ------------Audio-----------
+
+# captar o audio do microfone
+
+
+# tratar o audio do microfone
+
+
+
+
+
+# ------------overlay-----------
+
+
+
+
+
+# ------------funções-----------
+
+#- funções no pc:
+
+# --Abrir aplicação
+# --Procurar aplicação
+# --procurar as pastas mais utilizadas(verificar se possivel!!)
+# --Desligar/suspender e reniciar o pc
+
+
+
+
+
+
+
+
+"""
+Links:
+
+--Voz:
+https://www.youtube.com/watch?v=mYUyaKmvu6Y&ab_channel=freeCodeCamp.org
+https://www.youtube.com/watch?v=PWVH3Vx3dCI&ab_channel=Simplilearn
+https://www.youtube.com/watch?v=zqEoTxkh95M&ab_channel=TechWithTim
+https://www.youtube.com/results?search_query=know+you+speech+recognition+works
+https://www.youtube.com/watch?v=bfmFfD2RIcg&ab_channel=Simplilearn
+https://www.simplilearn.com/pgp-ai-machine-learning-certification-training-course?utm_campaign=NLPin5MinsScribe&utm_medium=Description&utm_source=youtube
+
+--Overlay:
+https://www.youtube.com/watch?v=zWuuk_j1iwM&ab_channel=tylerlaceby
+https://www.youtube.com/results?search_query=create+a+transparent+app
+https://www.youtube.com/watch?v=RqgsGaMPZTw&ab_channel=CodeMonkey
+https://www.youtube.com/results?search_query=create+desktop+widets+with+python
+https://www.youtube.com/watch?v=Pk9kRWcbJwE&ab_channel=MelvinChia
+
+
+
+
+
+
+
+
+"""
+
+
+
+
+
+

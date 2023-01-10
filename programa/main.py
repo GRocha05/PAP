@@ -16,11 +16,11 @@ os.system('cls')
 # tenho de entender como funciona esta função e criar a minha propria função para verificar o tamanho de um ficheiro ou pasta
 def get_dir_size(path='.'):
     total = 0
-    with os.scandir(path) as it:
+    with os.scandir(path) as it:       
         try:
-            for entry in it:
+            for entry in it:                
                 if entry.is_file():
-                    total += entry.stat().st_size
+                    total += entry.stat().st_size                    
                 elif entry.is_dir():
                     total += get_dir_size(entry.path)
         except NotADirectoryError:
@@ -30,7 +30,6 @@ def get_dir_size(path='.'):
     return total
 
 # ---------------------------------------------------------------
-
 
 for i in range(0, len(os.listdir(recursividade(os.getcwd())))):
     if os.path.isdir(recursividade(os.getcwd()) + '\\' + os.listdir(recursividade(os.getcwd()))[i]) == True:

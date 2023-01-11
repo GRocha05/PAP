@@ -11,14 +11,26 @@ os.system('cls')
 # para verificar algo sobre um ficheiro/diretoria tenho de adicionar o nome ao caminho atual e verificar, exemplo
 # na pasta programa tenho um ficheiro chamado google, para verificar se é um ficheiro ou app tenho de entrar no programa/google e depois verificar
 
+overlay =  overlay() # cria o objeto de sobreposição
 
+
+overlay.abrir()
+# quando a sobrepossição é chamada
+
+def funcao():
+    print('teste')
+    root.destroy()
+
+funcao()
+
+quit()
 
 # tenho de entender como funciona esta função e criar a minha propria função para verificar o tamanho de um ficheiro ou pasta
-def get_dir_size(path='.'):
+def get_dir_size(path):
     total = 0
-    with os.scandir(path) as it:       
+    with os.scandir(path) as it:      
         try:
-            for entry in it:                
+            for entry in it:  # it = iterator it = os.scandir(path)                             
                 if entry.is_file():
                     total += entry.stat().st_size                    
                 elif entry.is_dir():
@@ -56,8 +68,29 @@ print(os.stat(os.getcwd()))
 
 quit()
 
+# fazer um ficheiro de python proprio para os caminhos e para os .exe 
+# adiciona na lista normalmente em codigo, e depois substitui no ficheiro atraves de ler e escrever do python
+"""
+ex: 
+ficheiro:
+    dicionario =
+    {
+    'chrome.exe' : ['chrome','google','google chrome'],
+    'Teste' : ['idk','okig']
+    }
+python:
+    dicionario[teste].append = 'talvez'
+    
+ficheiro depois de python:
+    dicionario =
+    {
+    'chrome.exe' : ['chrome','google','google chrome'],
+    'Teste' : ['idk','okig','talvez']
+    }    
 
-   
+
+"""
+
 
 
 #em baixo é um pseudo do return da procura_app

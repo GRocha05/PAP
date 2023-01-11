@@ -2,7 +2,7 @@ import os;
 from dicionario import *
 apps = {}
 
-
+# em baixo tenho de mudar o nome da função para get_exe_name_from_names ou algo assim parecido
 #esta função vai ser utilizada para tratar dos dados introduzidos pelo utilizador para entender que app o utilizador deseja executar
 def sinonimos(word): #retorna o nome da variavel e de algum sinonimo existente
     for app in dicionario:
@@ -13,12 +13,16 @@ def sinonimos(word): #retorna o nome da variavel e de algum sinonimo existente
     return word
 
 
+
+# mudar o nome para algo parecido a recuar todas as directorias
 def recursividade(caminho): #vai retornar todos os caminhos até chegar ao disco raiz
     while caminho != os.path.dirname(caminho):
         caminho = os.path.dirname(caminho) 
     return caminho
 
 
+
+# mudar o nome para procura apps
 def procura_app(item,caminho):
     try:        
         for i in range(0,len(os.listdir(caminho))):            
@@ -41,6 +45,7 @@ def procura_app(item,caminho):
     return apps
 
 
+# mudar o nome para abrir app ou algo assim pareciso e adicionar logoa questao do sinonimo
 def abrir(item, caminhos):
     try:
         os.startfile(caminhos[item])
@@ -81,6 +86,34 @@ def abrir(item, caminhos):
 
 
 # ------------overlay-----------
+import tkinter as tk
+
+
+class overlay():
+    
+    def pergunta(self):
+        print('ok')
+        root.destroy()
+               
+    
+    def abrir(self,):
+        global root
+        root = tk.Tk()  
+
+        root.overrideredirect(True) 
+
+        # Make the window transparent
+        root.attributes("-alpha", 0.3)  
+
+        # Make the window stay on top of other windows
+        root.attributes("-topmost", True)   
+
+        root.after(0, abrir())
+
+        root.mainloop()
+
+  
+            
 
 
 
@@ -96,6 +129,8 @@ def abrir(item, caminhos):
 # --Desligar/suspender e reniciar o pc
 
 
+
+#- spotify:
 
 
 
@@ -121,7 +156,12 @@ https://www.youtube.com/results?search_query=create+desktop+widets+with+python
 https://www.youtube.com/watch?v=Pk9kRWcbJwE&ab_channel=MelvinChia
 
 
-
+--spotify:
+https://www.google.com/search?q=spotify+app&rlz=1C1VDKB_pt-PTPT1020PT1020&oq=spotify+app&aqs=chrome..69i57j0i512l6j69i61.2184j0j7&sourceid=chrome&ie=UTF-8
+https://www.youtube.com/results?search_query=create+a+spotify+app+python
+https://www.youtube.com/watch?v=c5sWvP9h3s8&ab_channel=ImdadCodes
+https://www.youtube.com/watch?v=-FsFT6OwE1A&t=152s&ab_channel=EuanMorgan
+https://www.youtube.com/watch?v=xdq6Gz33khQ&ab_channel=CodingEntrepreneurs
 
 
 
@@ -130,6 +170,9 @@ https://www.youtube.com/watch?v=Pk9kRWcbJwE&ab_channel=MelvinChia
 """
 
 
+# neural network
+# https://www.youtube.com/watch?v=aircAruvnKk&ab_channel=3Blue1Brown
+# https://www.youtube.com/watch?v=IHZwWFHWa-w&ab_channel=3Blue1Brown
 
 
 

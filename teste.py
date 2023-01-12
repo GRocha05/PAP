@@ -1,51 +1,47 @@
 import tkinter as tk
-import timer
 
 
-def after():
-    n = input()
-    if n == '1':
-        root.destroy()
+class overlay():       
+    def pergunta(self):
+        global n 
+        n = 'nao'
+        while n != 's': 
+            n = input('deseja fechar a aplicação?')
+            if n == 's':       
+                root.destroy()   
+                
+    def abrir(self,func=pergunta,position='.'):
+        global root
+        root = tk.Tk()
+        root.overrideredirect(True) 
+        root.attributes("-alpha", 0.1)# faz a janela ficar transparente
+        root.attributes("-topmost", True)# faz ficar em cima de qualquer outro processo
+        largura = root.winfo_screenwidth()*0.15
+        altura = root.winfo_screenheight()*0.15
+        root.geometry('{}x{}+{}+0'.format(int(largura), int(altura), int(root.winfo_screenwidth()-largura)))         
+        match position:
+            case 'top-left':
+                root.geometry('{}x{}+0+0'.format(int(largura), int(altura)))     
+            case 'bottom-right':
+                root.geometry('{}x{}+{}+{}'.format(int(largura), int(altura), int(root.winfo_screenwidth()-largura), int(root.winfo_screenheight()-altura)))
+            case 'bottom-left':
+                root.geometry('{}x{}+0+{}'.format(int(largura), int(altura), int(root.winfo_screenheight()-altura)))
+        
+        # root.geometry("200x200+0+{}". format(root.winfo_screenheight()- 500))# tamanho da janela + a posição
+       
+        root.after(0, func(self))
+        root.mainloop()
+
+def pergunta2(self):
+        global n 
+        n = 'nao'
+        while n != 's': 
+            n = input('deseja fechar a aplicação?')
+            if n == 's':       
+                root.destroy()   
 
 
-root = tk.Tk()  
+# incializar a aplicação
+overlay = overlay()
 
-root.overrideredirect(True) 
-
-# Make the window transparent
-root.attributes("-alpha", 0.3)  
-
-# Make the window stay on top of other windows
-root.attributes("-topmost", True)   
-
-root.after(0, after())
-
-root.mainloop()
-
-
-
-quit()
-
-root = tk.Tk()
-
-# Disable decoration of the window
-root.overrideredirect(True)
-
-# Make the window transparent
-root.attributes("-alpha", 0.5)
-
-# Set the window geometry to match the screen
-root.geometry("{}x{}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
-#os 2 primeiros são as dimensoes e os 2 ultimos são a posição(ex: a posição vai ser 0,0)
-#as dimensoes vao ser as dimensoes do ecrã no .format
-
-
-
-
-root.mainloop()
-
-n = input('teste')
-
-if n == '1':    
-    print("fechado")
-    root.quit()
+overlay.abrir(pergunta2,'bottom-right')

@@ -17,11 +17,6 @@ overlay =  overlay() # cria o objeto de sobreposição
 overlay.abrir()
 # quando a sobrepossição é chamada
 
-def funcao():
-    print('teste')
-    root.destroy()
-
-funcao()
 
 quit()
 

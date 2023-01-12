@@ -89,14 +89,17 @@ def abrir(item, caminhos):
 import tkinter as tk
 
 
-class overlay():
-    
+class overlay():         
+   
     def pergunta(self):
-        print('ok')
-        root.destroy()
+        n = 'nao'
+        while n != 'sim': 
+            n = input('deseja fechar a aplicação?')
+            if n == 'sim':       
+                root.destroy()
                
     
-    def abrir(self,):
+    def abrir(self):
         global root
         root = tk.Tk()  
 
@@ -108,7 +111,7 @@ class overlay():
         # Make the window stay on top of other windows
         root.attributes("-topmost", True)   
 
-        root.after(0, abrir())
+        root.after(0, overlay.pergunta(self))
 
         root.mainloop()
 

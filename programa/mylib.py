@@ -1,48 +1,20 @@
 import os;
-from dicionario import *
-apps = {}
+from exe_names import *
 
-# em baixo tenho de mudar o nome da função para get_exe_name_from_names ou algo assim parecido
 #esta função vai ser utilizada para tratar dos dados introduzidos pelo utilizador para entender que app o utilizador deseja executar
-def sinonimos(word): #retorna o nome da variavel e de algum sinonimo existente
+def get_exe(word): #retorna o .exe se encontrar um nome que correposda
     for app in dicionario:
-        sinonimos = dicionario[app]
-        for sinonimo in range( 0, len(sinonimos)):
-            if str.upper(sinonimos[sinonimo]) == word.upper():
+        names = dicionario[app]
+        for name in range( 0, len(names)):
+            if str.upper(names[name]) == word.upper():
                 return app
     return word
 
 
-
-# mudar o nome para algo parecido a recuar todas as directorias
-def recursividade(caminho): #vai retornar todos os caminhos até chegar ao disco raiz
+def get_first_dir(caminho): #vai retornar todos os caminhos até chegar ao disco raiz
     while caminho != os.path.dirname(caminho):
         caminho = os.path.dirname(caminho) 
     return caminho
-
-
-
-# mudar o nome para procura apps
-def procura_app(item,caminho):
-    try:        
-        for i in range(0,len(os.listdir(caminho))):            
-            os.system('cls')
-            print('loops feitos: ',i)
-            print('caminho: ',caminho)
-            for x in range(0 , len(item)):                
-                if os.listdir(caminho)[i] == item[x]:
-                # if os.listdir(caminho)[i].endswitch('.exe') == True:  <-- vai guardar o caminho de todos os executaveis
-                    apps.update({os.listdir(caminho)[i]:caminho + '\\' + os.listdir(caminho)[i]})                                    
-            else:                
-                if os.path.isdir(caminho + '\\'+ os.listdir(caminho)[i]) == True:
-                    try:
-                        procura_app(item,caminho + '\\' + os.listdir(caminho)[i])
-                    except:
-                        print('erro ao entrar na pasta: ',caminho + '\\' + os.listdir(caminho)[i])
-    except:
-        pass
-    print('done')
-    return apps
 
 
 # mudar o nome para abrir app ou algo assim pareciso e adicionar logoa questao do sinonimo
@@ -86,34 +58,6 @@ def abrir(item, caminhos):
 
 
 # ------------overlay-----------
-import tkinter as tk
-
-
-class overlay():         
-   
-    def pergunta(self):
-        n = 'nao'
-        while n != 'sim': 
-            n = input('deseja fechar a aplicação?')
-            if n == 'sim':       
-                root.destroy()
-               
-    
-    def abrir(self):
-        global root
-        root = tk.Tk()  
-
-        root.overrideredirect(True) 
-
-        # Make the window transparent
-        root.attributes("-alpha", 0.3)  
-
-        # Make the window stay on top of other windows
-        root.attributes("-topmost", True)   
-
-        root.after(0, overlay.pergunta(self))
-
-        root.mainloop()
 
   
             

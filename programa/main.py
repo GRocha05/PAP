@@ -11,54 +11,7 @@ os.system('cls')
 # para verificar algo sobre um ficheiro/diretoria tenho de adicionar o nome ao caminho atual e verificar, exemplo
 # na pasta programa tenho um ficheiro chamado google, para verificar se é um ficheiro ou app tenho de entrar no programa/google e depois verificar
 
-overlay =  overlay() # cria o objeto de sobreposição
 
-
-overlay.abrir()
-# quando a sobrepossição é chamada
-
-
-quit()
-
-# tenho de entender como funciona esta função e criar a minha propria função para verificar o tamanho de um ficheiro ou pasta
-def get_dir_size(path):
-    total = 0
-    with os.scandir(path) as it:      
-        try:
-            for entry in it:  # it = iterator it = os.scandir(path)                             
-                if entry.is_file():
-                    total += entry.stat().st_size                    
-                elif entry.is_dir():
-                    total += get_dir_size(entry.path)
-        except NotADirectoryError:
-            return os.path.getsize(path)
-        except:
-            pass
-    return total
-
-# ---------------------------------------------------------------
-
-for i in range(0, len(os.listdir(recursividade(os.getcwd())))):
-    if os.path.isdir(recursividade(os.getcwd()) + '\\' + os.listdir(recursividade(os.getcwd()))[i]) == True:
-        print('pasta',os.listdir(recursividade(os.getcwd()))[i])
-        try:
-            print(get_dir_size(recursividade(os.getcwd()) + '\\' + os.listdir(recursividade(os.getcwd()))[i]))
-        except:
-            print('erro a opter o tamanho do ficheiro')
-
-
-# ---------------------------------------------------------------
-
-quit()
-print(os.listdir(os.getcwd()))
-print(os.getcwd())
-print(os.path.getsize(os.getcwd()))
-
-
-quit()
-
-
-print(os.stat(os.getcwd()))
 
 
 quit()

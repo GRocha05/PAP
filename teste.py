@@ -1,4 +1,8 @@
 import tkinter as tk
+from tkinter import *
+import os
+from PIL import Image,ImageTk
+import time
 
 
 class overlay():       
@@ -14,7 +18,7 @@ class overlay():
         global root
         root = tk.Tk()
         root.overrideredirect(True) 
-        root.attributes("-alpha", 0.1)# faz a janela ficar transparente
+        root.attributes("-alpha", 0.5)# faz a janela ficar transparente
         root.attributes("-topmost", True)# faz ficar em cima de qualquer outro processo
         largura = root.winfo_screenwidth()*0.15
         altura = root.winfo_screenheight()*0.15
@@ -27,7 +31,10 @@ class overlay():
             case 'bottom-left':
                 root.geometry('{}x{}+0+{}'.format(int(largura), int(altura), int(root.winfo_screenheight()-altura)))
         
-        # root.geometry("200x200+0+{}". format(root.winfo_screenheight()- 500))# tamanho da janela + a posição
+        # root.geometry("200x200+0+{}". format(root.winfo_screenheight()- 500))# tamanho da janela + a posição         
+        label_img= Label(root,width= int(largura*0.050), height= int(altura*0.050), anchor= CENTER)
+        label_img.pack() 
+       
        
         root.after(0, func(self))
         root.mainloop()
@@ -42,6 +49,7 @@ def pergunta2(self):
 
 
 # incializar a aplicação
+
 overlay = overlay()
 
-overlay.abrir(pergunta2,'bottom-right')
+overlay.abrir()

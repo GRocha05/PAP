@@ -1,11 +1,60 @@
 from mylib import *
+from pathlib import Path
 from caminhos import *
 import textwrap
 import os
+import json
 
 
 def add_app(exe, dirc):
-    t1 = teste.copy()   
+    try:
+        with open("programa/caminhos.json", "r") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        data = {}
+    data[exe] = dirc
+
+    with open("programa/caminhos.json", "w") as f:
+        json.dump(data, f)
+
+# esta função é para ser usada no mylib
+def get_app_path(exe):
+    try:
+        with open("programa/caminhos.json", "r") as f:
+            data = json.load(f)
+            return data[exe]
+    except (FileNotFoundError, json.decoder.JSONDecodeError, KeyError):
+        return None
+
+
+def get_apps_dir(caminho='.', percentage=100):   
+    try:              
+        for root, dirs, files in os.walk(caminho):                
+            for file in files:
+                if os.path.isfile(os.path.join(root, file)) and file.endswith('.exe'):
+                    add_app(file, (root+file))                                        
+            for dir in dirs:
+                if len(dir) > 60: #adicionar filtragem de nome "logs"
+                    get_apps_dir(os.path.join(root, dir))            
+    except PermissionError:
+        print(f"Erro ao entrar na pasta: {dir} por falta de permissão")
+    except Exception as e:
+        print(f"Erro ao entrar na pasta: {dir}\n{e}")
+    
+
+
+get_apps_dir(caminho=get_first_dir(os.getcwd()))
+print("terminado")
+
+
+quit()
+global app
+
+def add_app(exe, dirc):
+    try:
+        t1 = teste.copy()  
+    except NameError:
+        t1 = {} 
     t1.update({exe: dirc}) #update vai atualizar o caminho do exe, caso ele nao exista vai ser criado   
 
     with open('programa\\caminhos.py','w') as f:
@@ -14,47 +63,30 @@ def add_app(exe, dirc):
             f.write(f"'{i}': '{t1[i]}',") 
         f.write("}")
 
-def get_dir_size(path):
-    total = 0
-    with os.scandir(path) as it:      
-        try:
-            for entry in it:  # it = iterator it = os.scandir(path)                             
-                if entry.is_file():
-                    total += entry.stat().st_size                    
-                elif entry.is_dir():
-                    total += get_dir_size(entry.path)
-        except NotADirectoryError:
-            return os.path.getsize(path)
-        except:
-            pass
-    return total
-
-def get_apps_dir(item,caminho='.'): #vai procurar por aplicações
-    try:        
-        for i in range(0,len(os.listdir(caminho))):            
-            os.system('cls')    
-            for i in os.scandir(caminho):
+def get_apps_dir(item='.', caminho='.',app=0):
+    os.system('cls')
+    try:
+        for root, dirs, files in os.walk(caminho):            
+            print(root)            
+            for file in files:
+                # if file in item:                
+                if file.endswith('.exe'):
+                    print('encontrado: ', file)  
+                    print('caminho: ', root)
+                    
+                    app += 1                  
+                    add_app(file, root)
+            for dir in dirs:              
                 try:
-                    if get_dir_size(i.path) > 1: # vai fazer a verificação de tamanho de cada pasta em bytes                  
-                        #agora tenho de fazer a verificação de tamanho de len para evitar logs e executar o resto da função com esta nova implementação
-                        print(i.path)
-                        print(get_dir_size(i.path))
+                    get_apps_dir(item, dir, app)
                 except:
-                    pass
-            
-            quit()        
-            for x in range(0 , len(item)):                
-                if os.listdir(caminho)[i] == item[x]:
-                # if os.listdir(caminho)[i].endswitch('.exe') == True:  <-- vai guardar o caminho de todos os executaveis
-                    add_app({os.listdir(caminho)[i] , caminho + '\\' + os.listdir(caminho)[i]})                                    
-                else:                
-                    if os.path.isdir(caminho + '\\'+ os.listdir(caminho)[i]) == True:
-                        try:
-                            get_apps_dir(item,caminho + '\\' + os.listdir(caminho)[i])
-                        except:
-                            print('erro ao entrar na pasta: ',caminho + '\\' + os.listdir(caminho)[i])
+                    print('erro ao entrar na pasta: ', dir)
     except:
         pass
-    print('done')
+    
 
-get_apps_dir('nada',get_first_dir(os.getcwd()))
+    
+
+get_apps_dir(caminho=get_first_dir(os.getcwd()))
+print('fim')
+print('foram encontradas: ', app, 'aplicacoes')

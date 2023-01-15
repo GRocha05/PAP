@@ -5,14 +5,18 @@ from PIL import Image,ImageTk
 import time
 
 
-class overlay():       
+class overlay():   
+
     def pergunta(self):
         global n 
         n = 'nao'
         while n != 's': 
             n = input('deseja fechar a aplicação?')
-            if n == 's':       
-                root.destroy()   
+            if n == 's':                  
+                try:    
+                    root.destroy()  
+                except TclError:
+                    print('janela ja foi fechada') 
                 
     def abrir(self,func=pergunta,position='.'):
         global root
@@ -32,8 +36,8 @@ class overlay():
                 root.geometry('{}x{}+0+{}'.format(int(largura), int(altura), int(root.winfo_screenheight()-altura)))
         
         # root.geometry("200x200+0+{}". format(root.winfo_screenheight()- 500))# tamanho da janela + a posição         
-        label_img= Label(root,width= int(largura*0.050), height= int(altura*0.050), anchor= CENTER)
-        label_img.pack() 
+        button = Button(root, width=int(largura), height= int(altura), anchor= CENTER, command= root.destroy)
+        button.pack() 
        
        
         root.after(0, func(self))

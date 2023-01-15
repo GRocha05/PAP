@@ -1,1 +1,0 @@
-teste={'cpuz.exe': 'C:\Program Files\CPUID\CPU-Z\cpuz.exe','chrome.exe': 'C:\Program Files\Google\Chrome\Application\chrome.exe',}

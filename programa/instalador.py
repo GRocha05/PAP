@@ -6,6 +6,7 @@ import os
 import json
 
 
+
 def add_app(exe, dirc):
     try:
         with open("programa/caminhos.json", "r") as f:
@@ -27,15 +28,20 @@ def get_app_path(exe):
         return None
 
 
-def get_apps_dir(caminho='.', percentage=100):   
+def get_apps_dir(caminho='.', teste=0):   # tem alguma coisa em erro !!! tenho de corrigir e melhorar o feacture da process bar
+    os.system('cls')
+    current_files = 0
+    ptc= 100
     try:              
-        for root, dirs, files in os.walk(caminho):                
+        for root, dirs, files in os.walk(caminho):   
+            current_files +=1             
             for file in files:
                 if os.path.isfile(os.path.join(root, file)) and file.endswith('.exe'):
                     add_app(file, (root+file))                                        
             for dir in dirs:
-                if len(dir) > 60: #adicionar filtragem de nome "logs"
-                    get_apps_dir(os.path.join(root, dir))            
+                if 'logs' not in dir:
+                    get_apps_dir(os.path.join(root, dir)) 
+            print(current_files*ptc/total_files, '%')      
     except PermissionError:
         print(f"Erro ao entrar na pasta: {dir} por falta de permissão")
     except Exception as e:
@@ -43,7 +49,9 @@ def get_apps_dir(caminho='.', percentage=100):
     
 
 
-get_apps_dir(caminho=get_first_dir(os.getcwd()))
+total_files = sum([len(files) for r, d, files in os.walk(get_first_dir(os.getcwd()))])
+
+get_apps_dir(get_first_dir(os.getcwd()), total_files)
 print("terminado")
 
 

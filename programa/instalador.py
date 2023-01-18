@@ -28,31 +28,32 @@ def get_app_path(exe):
         return None
 
 
-def get_apps_dir(caminho='.', teste=0):   # tem alguma coisa em erro !!! tenho de corrigir e melhorar o feacture da process bar
-    os.system('cls')
-    current_files = 0
+def get_apps_dir(caminho='.', total_files=0, current_files=0):   # tem alguma coisa em erro !!! tenho de corrigir e melhorar o feacture da process bar
+    os.system('cls')    
     ptc= 100
     try:              
         for root, dirs, files in os.walk(caminho):   
+            print(current_files*ptc/total_files, '%')
             current_files +=1             
             for file in files:
                 if os.path.isfile(os.path.join(root, file)) and file.endswith('.exe'):
-                    add_app(file, (root+file))                                        
+                    # add_app(file, (root+file))    
+                    continue                                    
             for dir in dirs:
                 if 'logs' not in dir:
-                    get_apps_dir(os.path.join(root, dir)) 
-            print(current_files*ptc/total_files, '%')      
+                    current_files +=get_apps_dir(os.path.join(root, dir))                   
     except PermissionError:
         print(f"Erro ao entrar na pasta: {dir} por falta de permissão")
     except Exception as e:
         print(f"Erro ao entrar na pasta: {dir}\n{e}")
-    
+    return current_files
 
 
 total_files = sum([len(files) for r, d, files in os.walk(get_first_dir(os.getcwd()))])
 
-get_apps_dir(get_first_dir(os.getcwd()), total_files)
+teste= get_apps_dir(get_first_dir(os.getcwd()), total_files=total_files)
 print("terminado")
+print(teste*100/total_files, '%')
 
 
 quit()

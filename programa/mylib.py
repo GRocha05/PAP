@@ -1,49 +1,75 @@
-import os;
-from exe_names import *
+import os
+import json
+import Levenshtein
 
-#esta função vai ser utilizada para tratar dos dados introduzidos pelo utilizador para entender que app o utilizador deseja executar
-def get_exe(word): #retorna o .exe se encontrar um nome que correposda
-    for app in dicionario:
-        names = dicionario[app]
-        for name in range( 0, len(names)):
-            if str.upper(names[name]) == word.upper():
-                return app
-    return word
-
-
+#função que vai o caminho raiz do disco
 def get_first_dir(caminho): #vai retornar todos os caminhos até chegar ao disco raiz
     while caminho != os.path.dirname(caminho):
         caminho = os.path.dirname(caminho) 
     return caminho
 
+def compare_words(word1, word2):
+    distance = Levenshtein.distance(word1, word2)
+    if distance <= 2:
+        return True
+    else:
+        return False
+ 
 
-# mudar o nome para abrir app ou algo assim pareciso e adicionar logoa questao do sinonimo
-def abrir(item, caminhos):
+#esta função vai ser utilizada para tratar dos dados introduzidos pelo utilizador para entender que app o utilizador deseja executar
+def get_exe(word): #retorna o .exe se encontrar um nome que correposda
     try:
-        os.startfile(caminhos[item])
-    except:
-        print('app nao encontrada')
+        #vai abrir o ficheiro json e verificar se o nome introduzido pelo utilizador corresponde a algum nome de uma aplicação
+        with open("programa/apps_names.json", "r") as f:
+            data = json.load(f)
+            for exe in data:
+                if word in data[exe]: # verifica se o nome está associado a algum exe no ficheiro
+                    return exe 
+            #caso o return seja executado é porque nao encontrou o nome na lista e termina a funcão
+            #caso o return nao seja executado a função vai continuar e vai comparar as palavras no dicionario para 
+            #procurar por palavras parecias e perguntar ao utlizador se por acaso se enganou
+            for exe in data:
+                for name in data[exe]:
+                    if compare_words(word, name): # caso a função de comparar palavras retorne true vai confirmar se é esse o exe desejado
+                        ask = input(f'quer dizer {name}? (y/n): ')
+                        if ask == 'y': #caso seja o exe desejado vai adicionar o nome ao ficheiro json e dar return do exe corretamente
+                            with open("programa/apps_names.json", "w") as f:
+                                data[exe].append(word)
+                                json.dump(data, f)                                
+                            return exe                               
+                    
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        data = {}
+        with open("programa/apps_names.json", "w") as f:
+            json.dump(data, f)
+        return None
+    
+    
+
+'''
+No abrir a aplicação é suposto ver se ha o exe e se é possivel 
+executar, caso nao encontre o caminho vai perguntar se quer adicionar 
+manualmente
+'''
+
+
+#função para abrir aplicaçoes
+def open_app(exe):
+    
+    if get_exe(exe) == None:
+        try:
+            print('vamos procurar nos recent uma pasta que verifique o nome')
+        except Exception as e:
+            print('nao foi possivel abrir a pasta desejada. erro {e}')
             
-
-# Na função abrir 
-
-
-# fazer filtragem de pastas que a função vai ou nao entrar(maximo de itens aceitaveis)
-# em cima esta em stand by
-
-
-# fazer função para abrir as aplicacoes
+    
+    elif get_exe(exe) != None:
+        print('vamos procurar o caminho do exe')
 
 
 
 # verificar se os ficheiros mais visitados/abertos pelo utilizador
 
-
-# fazer a sobrepossição no monitor
-
-# ------------------------------------------------------------------------------------------
-
-# Organização das funções
 
 
 # ------------Audio-----------

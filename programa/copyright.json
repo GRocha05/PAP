@@ -1,0 +1,8 @@
+    {
+        "author":"Gonçalo Rocha",
+        "Tittle":"Virtual Assistance",
+        "Description":"A virtual assistant able to answer questions about the weather, time, date, and more. and also give information and execute functinos to help the user in their daily life.",
+        "version":"1.0.0",
+        "main":"Main.py",
+        "year_Created":"2022"
+}

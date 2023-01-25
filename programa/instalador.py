@@ -4,27 +4,6 @@ import os
 import json
 
 
-def add_app(exe, dirc):
-    #esta zona vai adicionar o caminho do exe ao ficheiro json
-    try:
-        with open("programa/apps_roots.json", "r") as f:
-            data = json.load(f)
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
-        data = {}
-    data[exe] = dirc
-
-    with open("programa/apps_roots.json", "w") as f:
-        json.dump(data, f)
-    #esta zona vai adicionar o nome da aplicação ao ficheiro json
-    try: 
-        with open("programa/apps_names.json", "r") as f:
-            data = json.load(f)
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
-        data = {}
-    data[exe] = [exe[0:-4]]
-    with open("programa/apps_names.json", "w") as f:
-        json.dump(data, f)
-
 
 def get_apps_dir(caminho='.',idk=True):   # tem alguma coisa em erro !!! tenho de corrigir e melhorar o feacture da process bar  
     current_files = 0

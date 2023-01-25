@@ -18,26 +18,6 @@ quit()
 
 # fazer um ficheiro de python proprio para os caminhos e para os .exe 
 # adiciona na lista normalmente em codigo, e depois substitui no ficheiro atraves de ler e escrever do python
-"""
-ex: 
-ficheiro:
-    dicionario =
-    {
-    'chrome.exe' : ['chrome','google','google chrome'],
-    'Teste' : ['idk','okig']
-    }
-python:
-    dicionario[teste].append = 'talvez'
-    
-ficheiro depois de python:
-    dicionario =
-    {
-    'chrome.exe' : ['chrome','google','google chrome'],
-    'Teste' : ['idk','okig','talvez']
-    }    
-
-
-"""
 
 
 

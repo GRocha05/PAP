@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import *
-import os
-from PIL import Image,ImageTk
-import time
 
 
 class overlay():   
@@ -22,7 +19,7 @@ class overlay():
         global root
         root = tk.Tk()
         root.overrideredirect(True) 
-        root.attributes("-alpha", 0.5)# faz a janela ficar transparente
+        root.attributes("-alpha", 1)# faz a janela ficar transparente
         root.attributes("-topmost", True)# faz ficar em cima de qualquer outro processo
         largura = root.winfo_screenwidth()*0.15
         altura = root.winfo_screenheight()*0.15

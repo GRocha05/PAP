@@ -1,6 +1,55 @@
+
+# print(os.getenv('Username')) <-- vai buscar o nome do utlizador que está a utilizar o computador
+
 import os
 import json
-import Levenshtein
+import importlib.util
+import subprocess
+import win32api
+import win32con
+
+#função para importar a as bibliotecas caso nao sejam encontradas no computador
+def import_module(name):
+    spec = importlib.util.find_spec(name)
+    if spec is None:
+        # The module does not exist, install it
+        subprocess.run(["pip", "install", name])
+        spec = importlib.util.find_spec(name)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+try:
+    import Levenshtein
+except ModuleNotFoundError:
+    import_module("Levenshtein")
+
+def add_app(exe, dirc):
+    if exe == "" or dirc == "":
+        return
+    dirc = dirc.replace('"', '') # vai evitar erros ao guardar o caminho no ficheiro json
+    exe= exe.replace('"', '') 
+    exe= exe.replace("\\", "")
+    #esta zona vai adicionar o caminho do exe ao ficheiro json
+    try:
+        with open("programa/apps_paths.json", "r") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        data = {}
+    data[exe] = dirc
+
+    with open("programa/apps_paths.json", "w") as f:
+        json.dump(data, f)
+    #esta zona vai adicionar o nome da aplicação ao ficheiro json
+    try: 
+        with open("programa/apps_names.json", "r") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        data = {}
+    data[exe] = [exe.replace(".exe", "")]
+    with open("programa/apps_names.json", "w") as f:
+        json.dump(data, f)
+
 
 #função que vai o caminho raiz do disco
 def get_first_dir(caminho): #vai retornar todos os caminhos até chegar ao disco raiz
@@ -46,27 +95,46 @@ def get_exe(word): #retorna o .exe se encontrar um nome que correposda
     
     
 
-'''
-No abrir a aplicação é suposto ver se ha o exe e se é possivel 
-executar, caso nao encontre o caminho vai perguntar se quer adicionar 
-manualmente
-'''
 
-
-#função para abrir aplicaçoes
 def open_app(exe):
-    
-    if get_exe(exe) == None:
+    #caso nenhuma função seja executada o codigo vai continuar a executar até chegar ao final 
+    #quando chegar ao final é porque nao encontrou nenhuma aplicação ou pasta e vai
+    #perguntar se o utilizador quer adicionar manualmente
+    if get_exe(exe) != None:
+        exe = get_exe(exe)
+        print("vai procurar nas aplicações")
         try:
-            print('vamos procurar nos recent uma pasta que verifique o nome')
-        except Exception as e:
-            print('nao foi possivel abrir a pasta desejada. erro {e}')
-            
-    
-    elif get_exe(exe) != None:
-        print('vamos procurar o caminho do exe')
+            os.startfile(exe)
+            exit() #sempre que a aplicação executar vai terminar o if
+        except FileNotFoundError:
+            try:
+                with open("programa/apps_paths.json", "r") as f:
+                    data = json.load(f)
+                    os.startfile(data[exe])
+                    exit()# se executar vai terminar o if
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
+                data = {}
+                with open("programa/apps_paths.json", "w") as f:
+                    json.dump(data, f)
+            except KeyError:
+                pass
+        
+    print("Fazer função de procura nos recent")
+
+    print('Aplicação nao encontrada')
+    # ask = input('quer adicionar manualmente? (y/n): ')
+    # if ask != 'y':     
+    #     exit()  
+    import tkinter as tk
+    from tkinter import filedialog        
+    root = tk.Tk()
+    root.withdraw()
+    path = filedialog.askopenfilename(initialdir = "c:\\", title = "Select file", filetypes = (("Text files", "*.txt"), ("all files", "*.*")))
+    add_app(os.path.basename(path), path)
+    os.startfile(path)
 
 
+open_app("spotify")
 
 # verificar se os ficheiros mais visitados/abertos pelo utilizador
 

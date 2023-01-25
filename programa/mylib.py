@@ -1,12 +1,18 @@
 
 # print(os.getenv('Username')) <-- vai buscar o nome do utlizador que está a utilizar o computador
-
 import os
 import json
 import importlib.util
 import subprocess
-import win32api
-import win32con
+import tkinter as tk
+from tkinter import filedialog 
+
+global root
+
+def janela():
+    root = tk.Tk()
+    root.withdraw()
+
 
 #função para importar a as bibliotecas caso nao sejam encontradas no computador
 def import_module(name):
@@ -24,12 +30,23 @@ try:
 except ModuleNotFoundError:
     import_module("Levenshtein")
 
+class EmptyError(Exception):
+    "exe ou dirc vazio"
+    pass
+
+
 def add_app(exe, dirc):
     if exe == "" or dirc == "":
-        return
+        raise EmptyError()
+    if not os.path.exists(dirc):
+        raise FileNotFoundError()
+    if not os.path.isfile(dirc):
+        raise NotADirectoryError()
     dirc = dirc.replace('"', '') # vai evitar erros ao guardar o caminho no ficheiro json
     exe= exe.replace('"', '') 
     exe= exe.replace("\\", "")
+    if os.path.islink(dirc): #caso o caminho seja um atalho vai ser convertido para o caminho do exe
+        dirc = os.readlink(dirc)
     #esta zona vai adicionar o caminho do exe ao ficheiro json
     try:
         with open("programa/apps_paths.json", "r") as f:
@@ -91,12 +108,10 @@ def get_exe(word): #retorna o .exe se encontrar um nome que correposda
         data = {}
         with open("programa/apps_names.json", "w") as f:
             json.dump(data, f)
-        return None
-    
+        return None      
     
 
-
-def open_app(exe):
+def open_app(exe=""):
     #caso nenhuma função seja executada o codigo vai continuar a executar até chegar ao final 
     #quando chegar ao final é porque nao encontrou nenhuma aplicação ou pasta e vai
     #perguntar se o utilizador quer adicionar manualmente
@@ -104,14 +119,18 @@ def open_app(exe):
         exe = get_exe(exe)
         print("vai procurar nas aplicações")
         try:
-            os.startfile(exe)
-            exit() #sempre que a aplicação executar vai terminar o if
+            if os.access(exe, os.X_OK):
+                print("Executando a Aplicaçao")
+                os.startfile(exe)
+                exit() #sempre que a aplicação executar vai terminar o if
         except FileNotFoundError:
             try:
                 with open("programa/apps_paths.json", "r") as f:
                     data = json.load(f)
-                    os.startfile(data[exe])
-                    exit()# se executar vai terminar o if
+                    if os.access(data[exe], os.X_OK):
+                        print("Executando a Aplicaçao")
+                        os.startfile(data[exe])
+                        exit()# se executar vai terminar o if
             except (FileNotFoundError, json.decoder.JSONDecodeError):
                 data = {}
                 with open("programa/apps_paths.json", "w") as f:
@@ -122,20 +141,31 @@ def open_app(exe):
     print("Fazer função de procura nos recent")
 
     print('Aplicação nao encontrada')
-    # ask = input('quer adicionar manualmente? (y/n): ')
-    # if ask != 'y':     
-    #     exit()  
-    import tkinter as tk
-    from tkinter import filedialog        
-    root = tk.Tk()
-    root.withdraw()
-    path = filedialog.askopenfilename(initialdir = "c:\\", title = "Select file", filetypes = (("Text files", "*.txt"), ("all files", "*.*")))
-    add_app(os.path.basename(path), path)
-    os.startfile(path)
+    janela()
+    ask = input('quer adicionar manualmente? (y/n): ')
+    if ask != 'y':     
+        exit()  
+    path = ""
+    try:
+        path = filedialog.askopenfilename(initialdir = "c:\\", title = "Select file", filetypes = (("executable files", "*.exe*"), ("all files", "*.*")))
+        add_app(os.path.basename(path), path)
+        os.startfile(path)
+        print("Aplicaçao adicionada com sucesso")
+        return
+    except EmptyError:
+        print("Nenhum ficheiro foi selecionado")    
+    except FileNotFoundError:
+        print("Ficheiro não encontrado")
+    except NotADirectoryError:
+        print("O formato de caminho não é válido")
+    except PermissionError:
+        print("Não tem permissão para abrir o ficheiro")
+    print("ocorreu algum erro")
 
 
-open_app("spotify")
 
+open_app()
+print("Fim da execução")
 # verificar se os ficheiros mais visitados/abertos pelo utilizador
 
 

@@ -111,25 +111,23 @@ def get_exe(word): #retorna o .exe se encontrar um nome que correposda
         return None      
     
 
-def open_app(exe=""):
+def open_app(app=""):
     #caso nenhuma função seja executada o codigo vai continuar a executar até chegar ao final 
     #quando chegar ao final é porque nao encontrou nenhuma aplicação ou pasta e vai
     #perguntar se o utilizador quer adicionar manualmente
-    if get_exe(exe) != None:
-        exe = get_exe(exe)
+    if get_exe(app) != None:
         print("vai procurar nas aplicações")
-        try:
-            if os.access(exe, os.X_OK):
-                print("Executando a Aplicaçao")
-                os.startfile(exe)
-                exit() #sempre que a aplicação executar vai terminar o if
+        try:            
+            os.startfile(app)
+            print('aplicação aberta')
+                
         except FileNotFoundError:
             try:
                 with open("programa/apps_paths.json", "r") as f:
                     data = json.load(f)
-                    if os.access(data[exe], os.X_OK):
+                    if os.access(data[get_exe(app)], os.X_OK):
                         print("Executando a Aplicaçao")
-                        os.startfile(data[exe])
+                        os.startfile(data[get_exe(app)])
                         exit()# se executar vai terminar o if
             except (FileNotFoundError, json.decoder.JSONDecodeError):
                 data = {}
@@ -163,9 +161,17 @@ def open_app(exe=""):
     print("ocorreu algum erro")
 
 
+open_app("spotify")
+quit()
 
-open_app()
-print("Fim da execução")
+app=get_exe('spotify')
+
+with open("programa/apps_paths.json", "r") as f:
+    data = json.load(f)
+    
+    if os.access(data[app], os.X_OK):
+        print("Executando a Aplicaçao")
+        os.startfile(data[app])
 # verificar se os ficheiros mais visitados/abertos pelo utilizador
 
 

@@ -92,7 +92,8 @@ def resume_music():
     try:
         sp.start_playback()
     except spotipy.client.SpotifyException:
-        print("Ocorreu algum problema, tente novamente.")
+        last = sp.current_user_recently_played(limit=1)['items'][0]['track']['uri']
+        sp.start_playback(uris=[last])
 
 def next_music():
     sp.next_track()
@@ -119,20 +120,53 @@ def show_queue():
     for i in sp.queue()['queue']:
         print(i['name'])
 
-import os
-from mylib import * 
-os.system("cls")
-print(get_exe('Spotify'))
-open_app('Spotify')
+import requests
+import webbrowser
+import tekore as tk
+
+auth_url = tk.prompt_for_user_token(client_id,client_secret=client_secret ,redirect_uri=redirect_url, scope='app-remote-control')
+webbrowser.open(auth_url)
+
+
+print("Please log in to Spotify and grant access, then enter the URL you were redirected to:")
+redirect_response = input().strip()
+
+auth_code = redirect_response.split("code=")[1]
+user_token = tk.prompt_for_user_token(client_id, client_secret, redirect_url, code=auth_code)
+
+spotify = tk.Spotify(auth=user_token)
+
+# Get the list of devices associated with your Spotify account
+devices = spotify.device().device_list().devices
+
+# If there are no devices, exit the program
+if not devices:
+    print("No devices found.")
+    exit()
+
+# Select the first device in the list
+device_id = devices[0].id
+
+# Play a track on the selected device
+spotify.playback().start(device_id=device_id)
+
+# Check the response
+if spotify.last_status_code == 204:
+    print("Music is playing on device:", devices[0].name)
+else:
+    print("An error occurred:", spotify.last_status_text)
+
+
 
 quit()
-while True:
-    try: 
-        device = sp.devices()['devices'][0]['id']
-    except:
-        from mylib import *
-        open_app('Spotify')
-    os.system("cls")
+
+
+from mylib import open_app
+try: 
+    device = sp.devices()['devices'][0]['id']
+except:
+    open_app('Spotify')
+while True:   
     print("What do you want to do?")
     print("1. Play a song")
     print("2. Play a playlist")

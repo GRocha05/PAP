@@ -161,17 +161,8 @@ def open_app(app=""):
     print("ocorreu algum erro")
 
 
-open_app("spotify")
-quit()
 
-app=get_exe('spotify')
 
-with open("programa/apps_paths.json", "r") as f:
-    data = json.load(f)
-    
-    if os.access(data[app], os.X_OK):
-        print("Executando a Aplicaçao")
-        os.startfile(data[app])
 # verificar se os ficheiros mais visitados/abertos pelo utilizador
 
 

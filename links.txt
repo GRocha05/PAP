@@ -1,0 +1,28 @@
+https://www.youtube.com/watch?v=ZqpSb5p1xQo&ab_channel=RobMulla  -->Audio Data Processing in Python
+https://www.youtube.com/watch?v=FmD1S5yP_os&list=PL-wATfeyAMNrtbkCNsLcpoAyBBRJZVlnf&index=4&ab_channel=ValerioVelardo-TheSoundofAI --> deep learning couse audio
+https://www.youtube.com/results?search_query=librosa+python
+https://www.youtube.com/watch?v=MhOdbtPhbLU&ab_channel=Enthought -->Librosa Audio and Music Signal Analysis in Python | SciPy 2015 | Brian McFee
+https://www.youtube.com/watch?v=XEjiIHxZkhg&ab_channel=TitoSpadini -->Python - Importando e visualizando áudio
+https://www.youtube.com/watch?v=vbhlEMcb7RQ&ab_channel=Prodramp -->Audio processing in Python with Feature Extraction for machine learning
+https://www.youtube.com/results?search_query=simulate+a+spectogram+in+python
+https://www.youtube.com/watch?v=N3a-jjq3FAY&ab_channel=GuitarsAI -->SciPy Signal Spectrogram - Spectrograms Basics - Seminar 02 Support Material
+https://www.youtube.com/watch?v=TdnVE5m3o_0&ab_channel=ValerioVelardo-TheSoundofAI -->Extracting Mel Spectrograms with Python
+https://www.youtube.com/watch?v=3gzI4Z2OFgY&t=3s&ab_channel=ValerioVelardo-TheSoundofAI  -->How to Extract Spectrograms from Audio with Python
+https://www.youtube.com/results?search_query=make+machine+learning+recognize+audio
+https://www.youtube.com/watch?v=GxBG4wUWf4w&ab_channel=TensorFlow -->Machine Learning for audio classification
+
+https://www.google.com/search?q=vowels+function+to+spectrogram+python&rlz=1C1VDKB_pt-PTPT1020PT1020&oq=vowels+function+to+spectogran&aqs=chrome.2.69i57j33i10i160l3.42555j0j7&sourceid=chrome&ie=UTF-8
+
+https://courses.engr.illinois.edu/ece590sip/sp2018/spectrograms4_vowels.html#Spectrogram-Reading-Seminar,-Lecture-4
+
+https://www.google.com/search?q=python+algorithm+machine+learning&rlz=1C1VDKB_pt-PTPT1020PT1020&oq=python+algorithms+machine&aqs=chrome.2.69i57j0i19i512j0i19i22i30i625.7128j0j7&sourceid=chrome&ie=UTF-8
+
+https://scholar.google.pt/scholar?q=python+algorithm+machine+learning&hl=pt-PT&as_sdt=0&as_vis=1&oi=scholart
+
+https://www.mygreatlearning.com/blog/most-used-machine-learning-algorithms-in-python/
+
+https://www.google.com/search?q=artificial+neuron+why+the+weigh+is+different&rlz=1C1VDKB_pt-PTPT1020PT1020&oq=artificial+neuron+why+the+weigh+is+di&aqs=chrome.1.69i57j33i10i160l3j33i22i29i30l2j33i22i29i30i625l2j33i22i29i30j33i22i29i30i625.24530j0j7&sourceid=chrome&ie=UTF-8
+
+https://towardsdatascience.com/whats-the-role-of-weights-and-bias-in-a-neural-network-4cf7e9888a0f
+
+https://www.sciencedirect.com/topics/mathematics/nonlinear-model

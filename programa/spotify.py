@@ -120,6 +120,8 @@ def show_queue():
     for i in sp.queue()['queue']:
         print(i['name'])
 
+
+'''
 import requests
 import webbrowser
 import tekore as tk
@@ -158,14 +160,12 @@ else:
 
 
 
-quit()
-
-
 from mylib import open_app
 try: 
     device = sp.devices()['devices'][0]['id']
 except:
     open_app('Spotify')
+'''
 while True:   
     print("What do you want to do?")
     print("1. Play a song")

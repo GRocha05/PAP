@@ -26,3 +26,13 @@ https://www.google.com/search?q=artificial+neuron+why+the+weigh+is+different&rlz
 https://towardsdatascience.com/whats-the-role-of-weights-and-bias-in-a-neural-network-4cf7e9888a0f
 
 https://www.sciencedirect.com/topics/mathematics/nonlinear-model
+
+
+
+
+pesquisas random para adicionar no relatorio:
+https://aws.amazon.com/pt/what-is/overfitting/
+https://www.google.com/search?q=nodes+in+hidden+layer&rlz=1C1CHZN_pt-PTPT941PT941&oq=nodes+in+hidden&aqs=chrome.0.0i19i512j69i57j0i19i22i30l4j0i15i19i22i30l3.6372j0j7&sourceid=chrome&ie=UTF-8
+https://www.google.com/search?q=overfitting+machine+learning&rlz=1C1CHZN_pt-PTPT941PT941&oq=overfitting&aqs=chrome.1.69i57j0i512l9.3393j0j7&sourceid=chrome&ie=UTF-8
+https://towardsdatascience.com/convolutional-layers-vs-fully-connected-layers-364f05ab460b
+https://www.linkedin.com/pulse/choosing-number-hidden-layers-neurons-neural-networks-sachdev

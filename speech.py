@@ -40,34 +40,79 @@ class MLP(): # criar uma classe de multi layer preception
         
         #criar os layers (vai concatenar os layers de entrada, ocultos e saida)
         layers = [self.num_inputs] + self.num_hidden + [self.num_outputs] #esta variavel é uma lista com o numero de neuros de cada layer, cada layer é um elemento da lista e o numero de neuros é o valor do elemento
-        
+        print('layers: ', layers)
         # self.layers = layers #adicionar a lista de layers na variavel layers da classe MLP
 
 
-        self.weights = [] #criar uma lista de pesos
+        weights = [] #criar uma lista de pesos
         for i in range(len(layers)-1): #criar um loop para criar os pesos de cada layer o range vai de 0 até o tamanho da lista layers -1 (o -1 é para não pegar o ultimo elemento da lista)
-            matriz = np.random.rand(layers[i], layers[i+1]) #criar uma matriz de pesos aleatorios
-            self.weights.append(matriz) #adicionar a matriz de pesos na lista de pesos
+            weights.append(np.random.rand(layers[i], layers[i+1])) #criar uma matriz de pesos aleatorios #adicionar a matriz de pesos na lista de pesos
+        self.weights = weights #adicionar a lista de pesos na variavel weights da classe MLP
+        
+        print('pesos: ', self.weights)
           
+          
+        #criar uma lista com as ativações de cada layer
+        activations = [] #criar uma lista vazia
+        for i in range(len(layers)):
+            activations.append(np.zeros(layers[i])) #vai criar uma matriz de zeros com o numero de neuros de cada layer numa variavel local
+            self.activations = activations  #vai definir a lista de ativações como uma variavel da classe MLP
+        
+        print('ativações: ', self.activations)
+        
+        #criar uma lista com as derivadas de cada layer
+        derivatives = [] #criar uma lista vazia
+        for i in range(len(layers)-1):
+            derivatives.append(np.zeros((layers[i], layers[i+1]))) #vai criar uma matriz de zeros com o numero de neuros de cada layer numa variavel local
+            self.derivates = derivatives # vai definir a lista de derivadas como uma variavel da classe MLP
+        
+        print('derivadas: ', self.derivates)
+         
+       
+    #criar uma função para ativar os resultados da multiplicação da matriz de ativação com a matriz de pesos
     def _sigmoid(self, x): #criar uma função para ativar os neuros
-        return 1 / (1 + np.exp(-x)) #vai retornar o valor da função sigmoid
+        return 1 / (1 + np.exp(-x)) #vai retornar o valor da função sigmoid   
           
 
     def foward_propagation(self, inputs):
-        activations = inputs #criar uma variavel de ativação que vai receber os inputs para a primeira camada        
-        for matriz in self.weights: #criar um loop para percorrer a lista de pesos
+        '''
+        o primeiro a vai ser os inputs enquando os restantes vao ser as ativações
+        a = s(h) resultado da ativação do valor de h(a multiplicação das matrizes)
+        h = w * a resultado da multiplicação das matrizes de pesos com a matriz de ativação
+        w = matriz de pesos
+        
+        '''        
+        activations = inputs #criar uma variavel de ativação que vai receber os inputs para a primeira camada  
+        
+        self.activations[0] = activations #adicionar a ativação da primeira camada na lista de ativações    
+          
+        #c-> camada e w-> pesos
+        for c, w in enumerate(self.weights): #criar um loop para percorrer a lista de pesos
+            
             #calcular a ativação de cada layer
             #np.dor() esta funcção vai executar a multiplicação de 2 matrizes(pega na matriz de ativação(inputs na primera camada) e na matriz de pesos da respetiva camada)
-            net_inputs = np.dot(activations, matriz) #calcular a ativação de cada layer
+            net_inputs = np.dot(activations, w) #calcular a ativação de cada layer
             
             #calcular a ativação de cada layer
             activations = self._sigmoid(net_inputs)#vai fazer a ativação de cada layer com a função sigmoid(pega nos resultados da multiplicação da matriz de ativação com a matriz de pesos) e vai ativar cada neuron com a função sigmoid
+            self.activations[c+1] = activations # vai adicionar a ativação da camada na lista de ativações
+        
+            # a_3 = s(h_3) o resultado (ativação) vai ser o resultado da função sigmoid do a multiplicação da matriz de ativação com a matriz de pesos
+        
+            # h_3 = a_3*w_3 o resultado vai ser a multiplicação da matriz de ativação com a matriz de pesos
         
         return activations #vai devolver a ativação da ultima camada(os resultados da ultima camada) dependendo na quantidade de neuros de saida
 
 
+    def back_propagation(self, error, learning_rate):
+        for i in reversed(range(len(self.weights))):
+            print()
+
+
+
 
 if __name__ == "__main__":
+
     
     MLP= MLP()
     inputs = np.random.rand(MLP.num_inputs) #criar uma matriz de inputs aleatorios com o numero de neuros de entrada
@@ -75,12 +120,8 @@ if __name__ == "__main__":
     outputs = MLP.foward_propagation(inputs) #vai executar a função foward_propagation e vai receber os resultados da ultima camada
     
     print('inputs: ',inputs)
-    print('outputs: ',outputs)
+   # print('outputs: ',outputs)
     
-    
-
-
-
 
 
 

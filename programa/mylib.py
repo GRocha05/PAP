@@ -160,5 +160,22 @@ def open_app(app=""):
         print("Não tem permissão para abrir o ficheiro")
     print("ocorreu algum erro")
 
-open_app('arduino')
+
+def restart():
+    print("O computador vai reiniciar em 1 segundo")
+    os.system("shutdown /r /t 1")
+    
+    
+def shutdown():
+    print("O computador vai desligar em 1 segundo")
+    os.system("shutdown /s /t 1")
+    
+    
+def lock():
+    print("O computador vai bloquear em 1 segundo")
+    os.system("rundll32.exe user32.dll,LockWorkStation")
+    
+
+    
+
 

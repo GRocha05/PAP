@@ -40,7 +40,7 @@ class MLP(): # criar uma classe de multi layer preception
         
         #criar os layers (vai concatenar os layers de entrada, ocultos e saida)
         layers = [self.num_inputs] + self.num_hidden + [self.num_outputs] #esta variavel é uma lista com o numero de neuros de cada layer, cada layer é um elemento da lista e o numero de neuros é o valor do elemento
-        print('layers: ', layers)
+     
         # self.layers = layers #adicionar a lista de layers na variavel layers da classe MLP
 
 
@@ -49,7 +49,6 @@ class MLP(): # criar uma classe de multi layer preception
             weights.append(np.random.rand(layers[i], layers[i+1])) #criar uma matriz de pesos aleatorios #adicionar a matriz de pesos na lista de pesos
         self.weights = weights #adicionar a lista de pesos na variavel weights da classe MLP
         
-        print('pesos: ', self.weights)
           
           
         #criar uma lista com as ativações de cada layer
@@ -58,7 +57,6 @@ class MLP(): # criar uma classe de multi layer preception
             activations.append(np.zeros(layers[i])) #vai criar uma matriz de zeros com o numero de neuros de cada layer numa variavel local
             self.activations = activations  #vai definir a lista de ativações como uma variavel da classe MLP
         
-        print('ativações: ', self.activations)
         
         #criar uma lista com as derivadas de cada layer
         derivatives = [] #criar uma lista vazia
@@ -66,12 +64,17 @@ class MLP(): # criar uma classe de multi layer preception
             derivatives.append(np.zeros((layers[i], layers[i+1]))) #vai criar uma matriz de zeros com o numero de neuros de cada layer numa variavel local
             self.derivates = derivatives # vai definir a lista de derivadas como uma variavel da classe MLP
         
-        print('derivadas: ', self.derivates)
          
        
     #criar uma função para ativar os resultados da multiplicação da matriz de ativação com a matriz de pesos
     def _sigmoid(self, x): #criar uma função para ativar os neuros
         return 1 / (1 + np.exp(-x)) #vai retornar o valor da função sigmoid   
+
+    def _sigmoid_derivative(self, x): 
+        return x * (1.0 - x)
+    
+    def _mse(self, target, output): #mid square error
+        return np.average((target-output)**2)
           
 
     def foward_propagation(self, inputs):
@@ -104,48 +107,65 @@ class MLP(): # criar uma classe de multi layer preception
         return activations #vai devolver a ativação da ultima camada(os resultados da ultima camada) dependendo na quantidade de neuros de saida
 
 
-    def back_propagation(self, error, learning_rate):
-        for i in reversed(range(len(self.weights))):
-            print()
+    def back_propagate(self, error, verbose=False):
+        for i in reversed(range(len(self.derivates))):
+            activations = self.activations[i+1] 
+            #na primeira execução o erro vai ser o passado na função
+            #Quando o for chegar ao fim a variavel de erro vai ser o resultado da multiplicação do erro com a matriz de pesos
+            delta = error * self._sigmoid_derivative(activations)   
+            delta_reshape = delta.reshape(delta.shape[0],-1).T
+            current_activations = self.activations[i]
+            current_activations_reshaped = current_activations.reshape(current_activations.shape[0],-1) 
+            self.derivates[i] = np.dot(current_activations_reshaped, delta_reshape)
+            error=np.dot(delta, self.weights[i].T)    
+            #é necessario fazer o reshape da matriz de ativação para que a multiplicação seja possivel
+        
+            if verbose:
+                print('Derivatives for W{}: {}'.format(i, self.derivates[i]))
 
+        return error    
+            
+    
+    def gradient_descent(self, learningRate=1):
+        for i in range(len(self.weights)):
+            weights = self.weights[i]
+            # print(f'original weights of w_{i}: ', weights)
+            derivatives = self.derivates[i]
+            weights += derivatives * learningRate
+            # print(f'new weights of w_{i}: ', weights)
+            
+            
+    def train(self, inputs, targets, epochs, learningRate):
+        for i in range(epochs):
+            sum_errors = 0
+            for (input, target) in zip(inputs, targets):
+                output = self.foward_propagation(input)
+                error = target - output
+                self.back_propagate(error)
+                self.gradient_descent(learningRate)
+                sum_errors += self._mse(target, output)
+            print('Error: {} at epoch {}'.format(sum_errors/len(inputs), i))
+            
+        
 
 
 
 if __name__ == "__main__":
 
     
-    MLP= MLP()
-    inputs = np.random.rand(MLP.num_inputs) #criar uma matriz de inputs aleatorios com o numero de neuros de entrada
+    MLP= MLP(2, [5], 1)
     
-    outputs = MLP.foward_propagation(inputs) #vai executar a função foward_propagation e vai receber os resultados da ultima camada
+    input = np.array([0.1, 0.2])
     
-    print('inputs: ',inputs)
-   # print('outputs: ',outputs)
+    target = np.array([0.3])
     
-
-
-
-
-#criação de um neural network basico
-quit()
-#learning about machine learning
-import math
-
-def sigmoid(x):
-    return 1 / (1 + math.exp(-x))
+    output = MLP.foward_propagation(input)
     
-def activate(inputs, weights):
-    result = 0
-    for input, weight in zip(inputs, weights):
-        result += input * weight
-
-    return sigmoid(result)
-
-if __name__ == "__main__":
-    inputs = [.5, .4, .2]
-    weights = [.6, .7, .2]
-    output = activate(inputs, weights)
-    print(output)
+    error = target - output
+    
+    MLP.back_propagate(error, verbose=True)
+    
+    MLP.gradient_descent(learningRate=1)
     
 
 
